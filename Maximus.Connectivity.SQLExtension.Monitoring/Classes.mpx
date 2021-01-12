@@ -1,0 +1,108 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="Maximus.Connectivity.Monitoring.SQLServer" Base="MCM!Maximus.Connectivity.Monitoring.Test" 
+                   Accessibility="Public" Abstract="true" Hosted="true" Singleton="false">
+          <Property ID="UseShortServerName" Type="bool" DefaultValue="false"/>
+          <Property ID="InstanceName" Type="string" />
+          <Property ID="DatabaseName" Type="string"/>
+          <Property ID="ServerPort" Type="int" DefaultValue="-1"/>
+          <Property ID="ExtraConnectionString" Type="string" />
+          <Property ID="QueryText" Type="string" MaxLength="2000"/>
+          <Property ID="QueryType" EnumType="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration" Type="enum"/>
+          <Property ID="MinRows" Type="int" DefaultValue="-1"/>
+          <Property ID="ExplicitHealthSuccessValue" Type="int" DefaultValue="0"/>
+          <Property ID="ExplicitHealthWarningValue" Type="int" DefaultValue="1"/>
+          <Property ID="ExplicitHealthCriticalValue" Type="int" DefaultValue="2"/>
+        </ClassType>
+
+        <ClassType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth" Base="Maximus.Connectivity.Monitoring.SQLServer" Abstract="false"
+                   Accessibility="Public" Hosted="true">
+          
+        </ClassType>
+        <ClassType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth" Base="Maximus.Connectivity.Monitoring.SQLServer" Abstract="false"
+                   Accessibility="Public" Hosted="true">
+
+        </ClassType>
+      </ClassTypes>
+      <EnumerationTypes>
+        <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration" Accessibility="Public"/>
+        <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExplicitHealth" Accessibility="Public" Ordinal="1" Parent="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration"/>
+        <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteScalarSuccess" Accessibility="Public" Ordinal="2" Parent="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration"/>
+        <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteNonQuerySuccess" Accessibility="Public" Ordinal="3" Parent="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration"/>
+        <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteQuerySuccess" Accessibility="Public" Ordinal="4" Parent="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration"/>
+      </EnumerationTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <!-- Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration -->
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExplicitHealth">
+          <Name>Explicit Health</Name>
+          <Description>Query should return a scalar integer value, which explicitly defines monitor health state.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteScalarSuccess">
+          <Name>Execute Scalar Success</Name>
+          <Description>Execute query as scalar and ensure that the query ran successfully and returned a value.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteNonQuerySuccess">
+          <Name>Execute Non-Query Success</Name>
+          <Description>Execute query as command, don't expect any output, but ensure execution was successful.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteQuerySuccess">
+          <Name>Execute Query Success</Name>
+          <Description>Execute query and ensure it ran successfully. If 'Min Rows' is not zero or negative and query returns lesser number or rows, a warning will be issued.</Description>
+        </DisplayString>
+        
+        <!-- Maximus.Connectivity.Monitoring.SQLServer -->
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer">
+          <Name>SQL Server Synthetic Transaction</Name>
+          <Description>Base abstract class for </Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
+          <Name></Name>
+          <Description></Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>
