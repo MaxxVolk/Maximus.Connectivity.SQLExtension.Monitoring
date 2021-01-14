@@ -19,12 +19,12 @@
 
         <ClassType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth" Base="Maximus.Connectivity.Monitoring.SQLServer" Abstract="false"
                    Accessibility="Public" Hosted="true">
-          
         </ClassType>
+        
         <ClassType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth" Base="Maximus.Connectivity.Monitoring.SQLServer" Abstract="false"
                    Accessibility="Public" Hosted="true">
-
         </ClassType>
+        
       </ClassTypes>
       <EnumerationTypes>
         <EnumerationValue ID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration" Accessibility="Public"/>
@@ -53,7 +53,7 @@
         </DisplayString>
         <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.QueryType.Enumeration.ExecuteQuerySuccess">
           <Name>Execute Query Success</Name>
-          <Description>Execute query and ensure it ran successfully. If 'Min Rows' is not zero or negative and query returns lesser number or rows, a warning will be issued.</Description>
+          <Description>Execute query and ensure it ran successfully. If 'Minimum Rows Number' is not zero or negative and query returns lesser number or rows, a warning will be issued.</Description>
         </DisplayString>
         
         <!-- Maximus.Connectivity.Monitoring.SQLServer -->
@@ -61,45 +61,58 @@
           <Name>SQL Server Synthetic Transaction</Name>
           <Description>Base abstract class for </Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="DatabaseName">
+          <Name>Database Name</Name>
+          <Description>Database name to construct connection string. If left empty 'Database' parameter won't be added to connection string.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="ExplicitHealthCriticalValue">
+          <Name>Explicit Health Critical Value</Name>
+          <Description>Valid for 'Explicit Health' query mode only. Synthetic Transaction Monitor will turn into Critical state if the query returns this value.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="ExplicitHealthSuccessValue">
+          <Name>Explicit Health Success Value</Name>
+          <Description>Valid for 'Explicit Health' query mode only. Synthetic Transaction Monitor will turn into Healthy state if the query returns this value.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="ExplicitHealthWarningValue">
+          <Name>Explicit Health Warning Value</Name>
+          <Description>Valid for 'Explicit Health' query mode only. Synthetic Transaction Monitor will turn into Warning state if the query returns this value.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="ExtraConnectionString">
+          <Name>Extra Connection String</Name>
+          <Description>Additional connection string parameters to add to constructed connection string.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="InstanceName">
+          <Name>Instance Name</Name>
+          <Description>Database Instance name to construct connection string. Mutually exclusive with 'Server Port' property. Leave empty for default instance.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="MinRows">
+          <Name>Minimum Rows Number</Name>
+          <Description>Valid for 'Execute Query Success' query mode only. If set above zero, defines minimum required number of rows to return. If not met, the Synthetic Transaction Monitor will turn into Warning state.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="QueryText">
+          <Name>Query Text</Name>
+          <Description>T-SQL query for the Synthetic Transaction Monitor. If empty, the monitor will be always healthy.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="QueryType">
+          <Name>Query Type</Name>
+          <Description>Defines how to execute query and interpret execution results. See individual item description for details.</Description>
         </DisplayString>
-        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="">
-          <Name></Name>
-          <Description></Description>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="ServerPort">
+          <Name>Server Port</Name>
+          <Description>Server Port to construct connection string. Mutually exclusive with 'Database Instance' property. Leave zero or negative to use default.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer" SubElementID="UseShortServerName">
+          <Name>Use Short Server Name</Name>
+          <Description>Use only name portion without DNS domain suffix of the destination FQDN.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth">
+          <Name>SQL Server Synthetic Transaction - Windows Authentication</Name>
+          <Description>When created, this test object will add 'SQL Server Connect (Integrated Auth) Monitor', 'SQL Server Connect Slow (Integrated Auth) Monitor', 'Schema Available (Integrated Auth) Monitor', and 'Synthetic Transaction (Integrated Auth) Monitor' monitors for the selected destination. The 'Collect Performance Data' option is supported. When on, it will record connection time and synthetic transaction time.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth">
+          <Name>SQL Server Synthetic Transaction - SQL Authentication</Name>
+          <Description>When created, this test object will add 'SQL Server Connect (SQL Auth) Monitor', 'SQL Server Connect Slow (SQL Auth) Monitor', 'Schema Available (SQL Auth) Monitor', and 'Synthetic Transaction (SQL Auth) Monitor' monitors for the selected destination. The 'Collect Performance Data' option is supported. When on, it will record connection time and synthetic transaction time.</Description>
         </DisplayString>
         
       </DisplayStrings>

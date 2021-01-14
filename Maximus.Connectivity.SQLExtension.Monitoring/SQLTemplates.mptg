@@ -1,0 +1,450 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instancec3880d53235d422a93ff12f06406692f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Connect.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>Failed</OperationalStateId>
+            <OperationalStateDisplayName>Failed</OperationalStateDisplayName>
+            <MonitorTypeStateId>Failed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Connected</OperationalStateId>
+            <OperationalStateDisplayName>Connected</OperationalStateDisplayName>
+            <MonitorTypeStateId>Connected</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.IntegratedAuth.Connect.Monitor</Id>
+        <DisplayName>SQL Server Connect (Integrated Auth) Monitor</DisplayName>
+        <Description>Alerts if no connection is possible to the destination SQL Server.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>High</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Connect Failed</AlertName>
+        <AlertDescription>Connection to SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name failed.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+User name: $Data/Context/Property[@Name='Username']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance2f271843d2d743e2899528e4632b4466" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SchemaList.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>Failed</OperationalStateId>
+            <OperationalStateDisplayName>Failed</OperationalStateDisplayName>
+            <MonitorTypeStateId>Failed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Connected</OperationalStateId>
+            <OperationalStateDisplayName>Connected</OperationalStateDisplayName>
+            <MonitorTypeStateId>Connected</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.SQLAuth.SchemaList.Monitor</Id>
+        <DisplayName>SQL Server Schema List (SQL Auth) Monitor</DisplayName>
+        <Description>Alerts if unable to list available schemas.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>High</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server List Schemas Failed</AlertName>
+        <AlertDescription>Filed to query available schema list at the SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name failed.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+Username: $Data/Context/Property[@Name='Username']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instanceccbc82abf2974dd6ac99d4ed1d8c4eeb" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SlowConnect.UnitMonitor</MonitorType>
+        <MonitorConfig>&lt;SlowConnectThresholdMs&gt;200&lt;/SlowConnectThresholdMs&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>OK</OperationalStateId>
+            <OperationalStateDisplayName>OK</OperationalStateDisplayName>
+            <MonitorTypeStateId>OK</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Slow</OperationalStateId>
+            <OperationalStateDisplayName>Slow</OperationalStateDisplayName>
+            <MonitorTypeStateId>Slow</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.IntegratedAuth.SlowConnect.Monitor</Id>
+        <DisplayName>SQL Server Connect Slow (Integrated Auth) Monitor</DisplayName>
+        <Description>Alerts is connect to SQL Server is slow.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Low</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Connect Slow</AlertName>
+        <AlertDescription>Connection to SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name was too slow.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Time taken to connect: $Data/Context/Property[@Name='SQLConnectTime']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instanceb97a0932f28d403fb8eab5d493afe9ea" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Id>SQLServer.SQLAuth.Performance.SQLConnectTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Connect Time (SQL Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects connection time for SQL Server</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SQLConnectTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancee22069894c924ba4b9c40b849e7ab504" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Id>SQLServer.SQLAuth.Performance.TransactionTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Synthetic Transaction Time (SQL Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects time taken by synthetic transaction.</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.TransactionTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancec7b6c2d3650744acaf09bd6a848061cb" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Id>SQLServer.SQLAuth.Performance.SchemaListTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Schema List Time Time (SQL Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects query time for listing available schemas time for SQL Server</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SchemaListTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instanced66a6d966bd6439cb4bc2109a82bbc2d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SlowConnect.UnitMonitor</MonitorType>
+        <MonitorConfig>&lt;SlowConnectThresholdMs&gt;200&lt;/SlowConnectThresholdMs&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>OK</OperationalStateId>
+            <OperationalStateDisplayName>OK</OperationalStateDisplayName>
+            <MonitorTypeStateId>OK</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Slow</OperationalStateId>
+            <OperationalStateDisplayName>Slow</OperationalStateDisplayName>
+            <MonitorTypeStateId>Slow</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.SQLAuth.SlowConnect.Monitor</Id>
+        <DisplayName>SQL Server Connect Slow (SQL Auth) Monitor</DisplayName>
+        <Description>Alerts is connect to SQL Server is slow.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Low</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Connect Slow</AlertName>
+        <AlertDescription>Connection to SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name was too slow.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Time taken to connect: $Data/Context/Property[@Name='SQLConnectTime']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instanceaf5927dfd8ce49179f8a4ebbbc9f4b87" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Connect.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>Failed</OperationalStateId>
+            <OperationalStateDisplayName>Failed</OperationalStateDisplayName>
+            <MonitorTypeStateId>Failed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Connected</OperationalStateId>
+            <OperationalStateDisplayName>Connected</OperationalStateDisplayName>
+            <MonitorTypeStateId>Connected</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.SQLAuth.Connect.Monitor</Id>
+        <DisplayName>SQL Server Connect (SQL Auth) Monitor</DisplayName>
+        <Description>Alerts if no connection is possible to the destination SQL Server.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>High</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Connect Failed</AlertName>
+        <AlertDescription>Connection to SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name failed.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+Username: $Data/Context/Property[@Name='Username']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance194a311b303943079bcb541018f2b8b8" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SchemaList.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>Failed</OperationalStateId>
+            <OperationalStateDisplayName>Failed</OperationalStateDisplayName>
+            <MonitorTypeStateId>Failed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>Connected</OperationalStateId>
+            <OperationalStateDisplayName>Connected</OperationalStateDisplayName>
+            <MonitorTypeStateId>Connected</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.IntegratedAuth.SchemaList.Monitor</Id>
+        <DisplayName>SQL Server Schema List (Integrated Auth) Monitor</DisplayName>
+        <Description>Alerts if unable to list available schemas.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>High</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server List Schemas Failed</AlertName>
+        <AlertDescription>Filed to query available schema list at the SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name failed.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+Username: $Data/Context/Property[@Name='Username']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance108c1d2ef8924986bb550a4e4fd0671d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>SQLServer.IntegratedAuth.Performance.TransactionTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Synthetic Transaction Time (Integrated Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects time taken by synthetic transaction.</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.TransactionTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instanced96415ce91f640eabdca43bf4c2b8d7c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>SQLServer.IntegratedAuth.Performance.SQLConnectTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Connect Time (Integrated Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects connection time for SQL Server</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SQLConnectTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance53b94dc0d7f9442287370e5a1e010451" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>SQLServer.IntegratedAuth.Performance.SchemaListTime.PerformanceCollectionRule</Id>
+        <DisplayName>SQL Server Schema List Time Time (Integrated Auth) Performance Collection Rule</DisplayName>
+        <Description>Collects query time for listing available schemas time for SQL Server</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SchemaListTime.DataSource</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance33cd954389a34443b93619aa2d8bff78" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Transaction.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>ExecutedOK</OperationalStateId>
+            <OperationalStateDisplayName>ExecutedOK</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutedOK</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>ExecutedWithWarning</OperationalStateId>
+            <OperationalStateDisplayName>ExecutedWithWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutedWithWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>ExecutionFailed</OperationalStateId>
+            <OperationalStateDisplayName>ExecutionFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutionFailed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.SQLAuth.Transaction.Monitor</Id>
+        <DisplayName>SQL Server Synthetic Transaction (SQL Auth) Monitor</DisplayName>
+        <Description>Monitor SQL server health by executing the defined query and analyzes its output.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.SQLAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Synthetic Transaction Warning or Failure</AlertName>
+        <AlertDescription>SQL Server synthetic transaction failed (CRITICAL) or returned unexcpected results (WARNING) at the SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+Query executed: $Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryText$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance9fcc93d01cb646568ac8d6366ca48c07" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Transaction.UnitMonitor</MonitorType>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>ExecutedOK</OperationalStateId>
+            <OperationalStateDisplayName>ExecutedOK</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutedOK</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>ExecutedWithWarning</OperationalStateId>
+            <OperationalStateDisplayName>ExecutedWithWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutedWithWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>ExecutionFailed</OperationalStateId>
+            <OperationalStateDisplayName>ExecutionFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>ExecutionFailed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>SQLServer.IntegratedAuth.Transaction.Monitor</Id>
+        <DisplayName>SQL Server Synthetic Transaction (Integrated Auth) Monitor</DisplayName>
+        <Description>Monitor SQL server health by executing the defined query and analyzes its output.</Description>
+        <Target>Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>SQL Server Synthetic Transaction Warning or Failure</AlertName>
+        <AlertDescription>SQL Server synthetic transaction failed (CRITICAL) or returned unexcpected results (WARNING) at the SQL Server at the $Target/Host/Property[Type="System!System.Entity"]/DisplayName$ destination (index: $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$) using the $Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$ host name.
+
+Used SQL Connection String: $Data/Context/Property[@Name='ConnectionString']$
+Error message: $Data/Context/Property[@Name='Message']$
+Query executed: $Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryText$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

@@ -39,6 +39,12 @@
       <HintPath>C:\Projects\SCOMAuthoring\Maximus.Connectivity.Monitoring\Maximus.Connectivity.Monitoring\bin\Release\Maximus.Connectivity.Monitoring.mpb</HintPath>
       <Alias>MCM</Alias>
       <MinVersion>1.0.0.173</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\Microsoft.SystemCenter.DataWarehouse.Library.mp</HintPath>
+      <Alias>MSDL</Alias>
+      <MinVersion>7.1.10226.0</MinVersion>
     </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
@@ -60,13 +66,31 @@
       <Alias>Visualization</Alias>
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\System.Performance.Library.mp</HintPath>
+      <Alias>Perf</Alias>
+      <MinVersion>7.0.8433.0</MinVersion>
+    </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Classes.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ManagementPack.mpx">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLModules.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLSecurity.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLTemplates.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>SQLTemplates.mptg</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +100,12 @@
       <Private>True</Private>
       <PackageToBundle>True</PackageToBundle>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQLTemplates.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

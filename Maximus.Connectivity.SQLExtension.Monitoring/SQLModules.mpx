@@ -1,0 +1,1279 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/IntervalSeconds$</IntervalSeconds>
+                <SyncTime />
+              </DataSource>
+              <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" />
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_SQL">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/IntervalSeconds$</IntervalSeconds>
+                <SyncTime />
+              </DataSource>
+              <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" />
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_SQL">
+                <Node ID="DS_Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SQLConnectTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SQLConnectTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>ConnectTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='SQLConnectTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SchemaListTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.SchemaListTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>SchemaListTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='SchemaListTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.TransactionTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Performance.TransactionTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>TransactionTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='TransactionTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SQLConnectTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SQLConnectTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>ConnectTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='SQLConnectTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SchemaListTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.SchemaListTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>SchemaListTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='SchemaListTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.TransactionTime.DataSource -->
+      <DataSourceModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Performance.TransactionTime.DataSource" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+              <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <!-- comparing as string, because the converter is case sensitive, but when value comes from an object, it's capitalized -->
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <Value Type="String">$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/CollectPerformanceData$</Value>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">True</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">OK</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>
+                </Expression>
+              </ConditionDetection>
+              <ConditionDetection ID="CD_PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>SQL Server</ObjectName>
+                <CounterName>TransactionTime</CounterName>
+                <InstanceName />
+                <Value>$Data/Property[@Name='TransactionTime']$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="CD_PerfMapper">
+                <Node ID="CD_Connected">
+                  <Node ID="DS_SQL" />
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" Accessibility="Public" Batching="false"
+                             RunAs="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SecureReference">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PA_SubstituteParametersFromObject" TypeID="Maximus.Connectivity.Monitoring.SQLServer.NativeProbeAction">
+                <TestDisplayName>$Target/Host/Property[Type="System!System.Entity"]/DisplayName$</TestDisplayName>
+                <FullyQualifiedDomainName>$Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$</FullyQualifiedDomainName>
+                <TargetIndex>$Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$</TargetIndex>
+
+                <UseShortServerName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/UseShortServerName$</UseShortServerName>
+                <InstanceName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/InstanceName$</InstanceName>
+                <DatabaseName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/DatabaseName$</DatabaseName>
+                <ServerPort>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ServerPort$</ServerPort>
+                <ExtraConnectionString>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExtraConnectionString$</ExtraConnectionString>
+                <QueryText>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryText$</QueryText>
+                <QueryType>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryType$</QueryType>
+                <MinRows>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/MinRows$</MinRows>
+                <ExplicitHealthSuccessValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthSuccessValue$</ExplicitHealthSuccessValue>
+                <ExplicitHealthWarningValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthWarningValue$</ExplicitHealthWarningValue>
+                <ExplicitHealthCriticalValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthCriticalValue$</ExplicitHealthCriticalValue>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_SubstituteParametersFromObject" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" Accessibility="Public" Batching="false">
+        <Configuration />
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PA_SubstituteParametersFromObject" TypeID="Maximus.Connectivity.Monitoring.SQLServer.NativeProbeAction">
+                <TestDisplayName>$Target/Host/Property[Type="System!System.Entity"]/DisplayName$</TestDisplayName>
+                <FullyQualifiedDomainName>$Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/FullyQualifiedDomainName$</FullyQualifiedDomainName>
+                <TargetIndex>$Target/Host/Property[Type="MCM!Maximus.Connectivity.Monitoring.FullyQualifiedDomainName"]/TargetIndex$</TargetIndex>
+
+                <UseShortServerName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/UseShortServerName$</UseShortServerName>
+                <InstanceName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/InstanceName$</InstanceName>
+                <DatabaseName>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/DatabaseName$</DatabaseName>
+                <ServerPort>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ServerPort$</ServerPort>
+                <ExtraConnectionString>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExtraConnectionString$</ExtraConnectionString>
+                <QueryText>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryText$</QueryText>
+                <QueryType>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/QueryType$</QueryType>
+                <MinRows>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/MinRows$</MinRows>
+                <ExplicitHealthSuccessValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthSuccessValue$</ExplicitHealthSuccessValue>
+                <ExplicitHealthWarningValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthWarningValue$</ExplicitHealthWarningValue>
+                <ExplicitHealthCriticalValue>$Target/Property[Type="Maximus.Connectivity.Monitoring.SQLServer"]/ExplicitHealthCriticalValue$</ExplicitHealthCriticalValue>
+
+                <Username>$RunAs[Name="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SecureReference"]/UserName$</Username>
+                <Password>$RunAs[Name="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SecureReference"]/Password$</Password>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA_SubstituteParametersFromObject" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.NativeProbeAction -->
+      <ProbeActionModuleType ID="Maximus.Connectivity.Monitoring.SQLServer.NativeProbeAction" Accessibility="Internal" Batching="false">
+        <Configuration>
+          <xsd:element minOccurs="1" name="TestDisplayName" type="xsd:string" />
+
+          <xsd:element minOccurs="1" name="FullyQualifiedDomainName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="TargetIndex" type="xsd:integer" />
+
+          <xsd:element minOccurs="1" name="UseShortServerName" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="InstanceName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="DatabaseName" type="xsd:string" />
+          <xsd:element minOccurs="1" name="ServerPort" type="xsd:integer" />
+          <xsd:element minOccurs="1" name="ExtraConnectionString" type="xsd:string" />
+          <xsd:element minOccurs="1" name="QueryText" type="xsd:string" />
+          <xsd:element minOccurs="1" name="QueryType" type="xsd:string" />
+          <xsd:element minOccurs="1" name="MinRows" type="xsd:integer" />
+          <xsd:element minOccurs="1" name="ExplicitHealthSuccessValue" type="xsd:integer" />
+          <xsd:element minOccurs="1" name="ExplicitHealthWarningValue" type="xsd:integer" />
+          <xsd:element minOccurs="1" name="ExplicitHealthCriticalValue" type="xsd:integer" />
+
+          <!-- Will be empty for Windows Auth -->
+          <xsd:element minOccurs="0" name="Username" type="xsd:string" />
+          <xsd:element minOccurs="0" name="Password" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.Connectivity.SQLExtension.Modules.DeployableAssembly</Assembly>
+            <Type>Maximus.Connectivity.SQLExtension.Modules.SQLServerSyntheticTransactionPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+
+    <MonitorTypes>
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Connect.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Connect.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Connected" NoDetection="false" />
+          <MonitorTypeState ID="Failed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Failed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Connect.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Connect.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Connected" NoDetection="false" />
+          <MonitorTypeState ID="Failed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Failed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SlowConnect.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SlowConnect.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" />
+          <MonitorTypeState ID="Slow" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="SlowConnectThresholdMs" type="xsd:double" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="SlowConnectThresholdMs" Selector="$Config/SlowConnectThresholdMs$" ParameterType="double" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <Or>
+                  <!-- Failure or no-test treated as health -->
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">FAIL</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">NONE</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <And>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">OK</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="Double">Property[@Name='SQLConnectTime']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Less</Operator>
+                          <ValueExpression>
+                            <Value Type="Double">$Config/SlowConnectThresholdMs$</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                    </And>
+                  </Expression>
+                </Or>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Slow" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">OK</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='SQLConnectTime']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>GreaterEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/SlowConnectThresholdMs$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Slow">
+              <Node ID="CD_Slow">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Slow">
+              <Node ID="CD_Slow">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SlowConnect.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SlowConnect.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="OK" NoDetection="false" />
+          <MonitorTypeState ID="Slow" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="SlowConnectThresholdMs" type="xsd:double" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="SlowConnectThresholdMs" Selector="$Config/SlowConnectThresholdMs$" ParameterType="double" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_OK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <Or>
+                  <!-- Failure or no-test treated as health -->
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">FAIL</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">NONE</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <And>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">OK</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="Double">Property[@Name='SQLConnectTime']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Less</Operator>
+                          <ValueExpression>
+                            <Value Type="Double">$Config/SlowConnectThresholdMs$</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                    </And>
+                  </Expression>
+                </Or>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Slow" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='SQLConnectStatus']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">OK</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='SQLConnectTime']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>GreaterEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/SlowConnectThresholdMs$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Slow">
+              <Node ID="CD_Slow">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="OK">
+              <Node ID="CD_OK">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Slow">
+              <Node ID="CD_Slow">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SchemaList.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.SchemaList.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Connected" NoDetection="false" />
+          <MonitorTypeState ID="Failed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SchemaListStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Failed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SchemaListStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SchemaList.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.SchemaList.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="Connected" NoDetection="false" />
+          <MonitorTypeState ID="Failed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_Connected" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SchemaListStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_Failed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='SchemaListStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="Connected">
+              <Node ID="CD_Connected">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="Failed">
+              <Node ID="CD_Failed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Transaction.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.Transaction.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ExecutedOK" NoDetection="false" />
+          <MonitorTypeState ID="ExecutedWithWarning" NoDetection="false" />
+          <MonitorTypeState ID="ExecutionFailed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.SQLAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_ExecutedOK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_ExecutedWithWarning" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">WARNING</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_ExecutionFailed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ExecutedOK">
+              <Node ID="CD_ExecutedOK">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ExecutedWithWarning">
+              <Node ID="CD_ExecutedWithWarning">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ExecutionFailed">
+              <Node ID="CD_ExecutionFailed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="ExecutedOK">
+              <Node ID="CD_ExecutedOK">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ExecutedWithWarning">
+              <Node ID="CD_ExecutedWithWarning">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ExecutionFailed">
+              <Node ID="CD_ExecutionFailed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Transaction.UnitMonitor -->
+      <UnitMonitorType ID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.Transaction.UnitMonitor" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ExecutedOK" NoDetection="false" />
+          <MonitorTypeState ID="ExecutedWithWarning" NoDetection="false" />
+          <MonitorTypeState ID="ExecutionFailed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration />
+        <OverrideableParameters />
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.DataSource" />
+            <ProbeAction ID="PA_SQL" TypeID="Maximus.Connectivity.Monitoring.SQLServer.IntegratedAuth.ProbeAction" />
+            <ProbeAction ID="PA_Passthrough" TypeID="System!System.PassThroughProbe" />
+            <ConditionDetection ID="CD_ExecutedOK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">OK</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_ExecutedWithWarning" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">WARNING</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+            <ConditionDetection ID="CD_ExecutionFailed" TypeID="System!System.ExpressionFilter.IntervalSuppression">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='TransactionStatus']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">FAIL</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <SuppressionSettings>
+                <MatchCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/MatchCount$</MatchCount>
+                <SampleCount>$Target/Property[Type="MCM!Maximus.Connectivity.Monitoring.Test"]/SampleCount$</SampleCount>
+              </SuppressionSettings>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ExecutedOK">
+              <Node ID="CD_ExecutedOK">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ExecutedWithWarning">
+              <Node ID="CD_ExecutedWithWarning">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ExecutionFailed">
+              <Node ID="CD_ExecutionFailed">
+                <Node ID="DS_SQL" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="ExecutedOK">
+              <Node ID="CD_ExecutedOK">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ExecutedWithWarning">
+              <Node ID="CD_ExecutedWithWarning">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ExecutionFailed">
+              <Node ID="CD_ExecutionFailed">
+                <Node ID="PA_SQL">
+                  <Node ID="PA_Passthrough" />
+                </Node>
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>

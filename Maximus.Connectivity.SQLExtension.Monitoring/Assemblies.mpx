@@ -1,0 +1,10 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Resources>
+    <DeployableAssembly ID="Maximus.Connectivity.SQLExtension.Modules.DeployableAssembly" HasNullStream="false" Accessibility="Public"
+                        QualifiedName="Maximus.Connectivity.SQLExtension.Modules, Version=1.0.0.5, Culture=neutral, PublicKeyToken=fd5098a6a3259696"
+                        FileName="Maximus.Connectivity.SQLExtension.Modules.dll">
+      <Dependency ID="MBL!Maximus.Base.Library.ManagedWorkflowBase.DeployableAssembly"/>
+      <Dependency ID="MBL!Maximus.Base.Library.Newtonsoft.Json.DeployableAssembly"/>
+    </DeployableAssembly>
+  </Resources>
+</ManagementPackFragment>
